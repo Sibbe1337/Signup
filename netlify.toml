@@ -6,7 +6,6 @@
   NEXT_PUBLIC_SITE_URL = "your-site-url"
   NODE_VERSION = "18"
   NPM_FLAGS = "--legacy-peer-deps"
-  GO_VERSION = "1.19"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
