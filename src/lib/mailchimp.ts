@@ -5,8 +5,8 @@ export function initMailchimp() {
   const server = process.env.MAILCHIMP_SERVER_PREFIX;
 
   if (!apiKey || !server) {
-    console.error("Mailchimp-konfiguration saknas");
-    throw new Error("Mailchimp-konfiguration saknas");
+    console.error("Mailchimp configuration missing");
+    throw new Error("Mailchimp configuration missing");
   }
 
   // Verifiera att API-nyckeln har rätt format
@@ -36,50 +36,55 @@ export function initMailchimp() {
 
 export async function validateMailchimpConfig() {
   try {
-    console.log("Testar Mailchimp-anslutning...");
+    console.log("Testing Mailchimp connection...");
     const client = initMailchimp();
     
-    // Testa ping först
+    // Test ping first
     try {
-      console.log("Försöker pinga Mailchimp...");
+      console.log("Attempting to ping Mailchimp...");
       const pingResponse = await client.ping.get();
-      console.log("Ping lyckades:", pingResponse);
+      console.log("Ping successful:", pingResponse);
     } catch (pingError: any) {
-      console.error("Ping misslyckades:", {
+      console.error("Ping failed:", {
         error: pingError.message,
         status: pingError.status,
         response: pingError.response?.body,
-        stack: pingError.stack,
       });
       return false;
     }
     
-    // Testa audience-anslutning
+    // Test audience connection
     try {
       const listId = process.env.MAILCHIMP_NEWSLETTER_LIST_ID;
-      console.log("Försöker hämta lista med ID:", listId);
+      console.log("Attempting to fetch list with ID:", listId);
       
-      const audienceResponse = await client.lists.getList(listId!);
-      console.log("Lista hittad:", {
-        id: audienceResponse.id,
-        name: audienceResponse.name,
-      });
+      // Använd getLists istället för getList
+      const listsResponse = await client.lists.getLists();
+      const audience = listsResponse.lists.find(list => list.id === listId);
+      
+      if (audience) {
+        console.log("List found:", {
+          id: audience.id,
+          name: audience.name,
+        });
+      } else {
+        console.error("List not found with ID:", listId);
+        return false;
+      }
     } catch (audienceError: any) {
-      console.error("Kunde inte hämta lista:", {
+      console.error("Could not fetch list:", {
         error: audienceError.message,
         status: audienceError.status,
         response: audienceError.response?.body,
-        stack: audienceError.stack,
       });
       return false;
     }
     
     return true;
   } catch (error: any) {
-    console.error("Oväntat fel vid Mailchimp-validering:", {
+    console.error("Unexpected error during Mailchimp validation:", {
       message: error.message,
       stack: error.stack,
-      type: error.constructor.name,
     });
     return false;
   }
