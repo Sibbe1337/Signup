@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { initMailchimp } from "@/lib/mailchimp";
 
 type SubscribeRequest = {
   email: string;
@@ -11,21 +12,11 @@ export async function POST(request: Request) {
     const body: SubscribeRequest = await request.json();
     const { email, type, marketingConsent } = body;
     
-    const apiKey = process.env.MAILCHIMP_API_KEY!;
-    const server = process.env.MAILCHIMP_SERVER_PREFIX!;
+    const client = initMailchimp();
     const listId = process.env.MAILCHIMP_NEWSLETTER_LIST_ID!;
-    
-    const baseUrl = `https://${server}.api.mailchimp.com/3.0`;
-    const auth = Buffer.from(`anystring:${apiKey}`).toString('base64');
 
-    // Lägg till prenumerant i Mailchimp
-    const response = await fetch(`${baseUrl}/lists/${listId}/members`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Basic ${auth}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    try {
+      const response = await client.lists.addListMember(listId, {
         email_address: email,
         status: 'subscribed',
         merge_fields: {
@@ -35,40 +26,39 @@ export async function POST(request: Request) {
           marketing_permission_id: "marketing_general",
           enabled: marketingConsent || false,
         }],
-        tags: [type], // Tagga prenumeranten baserat på typ
-      }),
-    });
+        tags: [type],
+      });
 
-    const data = await response.json();
+      return NextResponse.json({
+        success: true,
+        message: type === "newsletter" 
+          ? "Thank you for subscribing!" 
+          : "You're now on the waitlist!",
+        data: {
+          id: response.id,
+          email: response.email_address,
+          status: response.status,
+        },
+      }, { status: 201 });
 
-    if (!response.ok) {
-      // Hantera specifika fel
-      if (data.title === "Member Exists") {
+    } catch (error: any) {
+      // Handle specific Mailchimp errors
+      if (error.response?.body?.title === "Member Exists") {
         return NextResponse.json({
-          error: "Email address is already registered",
+          success: false,
+          error: "This email is already registered",
         }, { status: 400 });
       }
 
-      throw new Error(data.detail || "Could not process the subscription");
+      console.error("Mailchimp API error:", error);
+      throw error;
     }
-
-    return NextResponse.json({
-      success: true,
-      message: type === "newsletter" 
-        ? "Thank you for subscribing!" 
-        : "You're now on the waitlist!",
-      data: {
-        id: data.id,
-        email: data.email_address,
-        status: data.status,
-      },
-    }, { status: 201 });
 
   } catch (error: any) {
     console.error("Subscription error:", error);
     return NextResponse.json({
-      error: "Could not process the subscription",
-      details: error.message,
+      success: false,
+      error: error.message || "Could not process your subscription. Please try again.",
     }, { status: 500 });
   }
 } 

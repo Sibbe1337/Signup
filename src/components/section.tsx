@@ -117,12 +117,10 @@ export function Section() {
         <div className="grid grid-cols-1 gap-8 py-12 md:grid-cols-2">
           <div className="relative aspect-square overflow-hidden rounded-lg">
             <Image
-              src="/images/f8835ec5b1e556e6e955e03887da845c.gif"
+              src="https://placehold.co/800x800"
               alt="MoodTunes Platform Preview"
               width={800}
               height={800}
-              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
-              placeholder="blur"
               className="object-cover"
             />
             <div className="mx-auto w-full max-w-md p-6">
