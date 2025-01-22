@@ -114,63 +114,52 @@ export function Section() {
             music recommendation engine.
           </p>
         </div>
-        <div className="grid grid-cols-1 gap-8 py-12 md:grid-cols-2">
-          <div className="relative aspect-square overflow-hidden rounded-lg">
-            <Image
-              src="https://via.placeholder.com/800x800/4F46E5/FFFFFF?text=MoodTunes"
-              alt="MoodTunes Platform Preview"
-              width={800}
-              height={800}
-              className="object-cover"
-            />
-            <div className="mx-auto w-full max-w-md p-6">
+        <div className="grid grid-cols-1 gap-8 py-12">
+          <div className="flex flex-col justify-center space-y-6">
+            <div className="space-y-2">
+              <h2 className="text-2xl font-heading font-bold">Subscribe to our newsletter</h2>
+              <p className="text-muted-foreground">
+                Get the latest updates directly in your inbox
+              </p>
+            </div>
+            <Card className="p-6">
               <form onSubmit={handleNewsletterSubmit} className="space-y-4">
-                <div className="text-center">
-                  <h2 className="text-2xl font-heading font-bold">Subscribe to our newsletter</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Get the latest updates directly in your inbox
-                  </p>
+                <div className="space-y-2">
+                  <Label htmlFor="newsletter-email">Email address</Label>
+                  <Input
+                    id="newsletter-email"
+                    type="email"
+                    placeholder="your@email.com"
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    disabled={isNewsletterLoading}
+                    required
+                  />
                 </div>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="newsletter-email">Email address</Label>
-                    <div className="flex gap-2">
-                      <Input
-                        id="newsletter-email"
-                        type="email"
-                        placeholder="your@email.com"
-                        value={newsletterEmail}
-                        onChange={(e) => setNewsletterEmail(e.target.value)}
-                        disabled={isNewsletterLoading}
-                        required
-                      />
-                      <Button type="submit" disabled={isNewsletterLoading}>
-                        {isNewsletterLoading ? (
-                          <Loader2 className="mr-2 size-4 animate-spin" />
-                        ) : (
-                          <ArrowRight className="mr-2 size-4" />
-                        )}
-                        Subscribe
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="marketing-consent"
-                      checked={marketingConsent}
-                      onCheckedChange={(checked) => setMarketingConsent(checked as boolean)}
-                      disabled={isNewsletterLoading}
-                    />
-                    <Label
-                      htmlFor="marketing-consent"
-                      className="text-sm text-muted-foreground"
-                    >
-                      I agree to receive marketing emails
-                    </Label>
-                  </div>
+                <Button type="submit" className="w-full" disabled={isNewsletterLoading}>
+                  {isNewsletterLoading ? (
+                    <Loader2 className="mr-2 size-4 animate-spin" />
+                  ) : (
+                    <ArrowRight className="mr-2 size-4" />
+                  )}
+                  Subscribe
+                </Button>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="marketing-consent"
+                    checked={marketingConsent}
+                    onCheckedChange={(checked) => setMarketingConsent(checked as boolean)}
+                    disabled={isNewsletterLoading}
+                  />
+                  <Label
+                    htmlFor="marketing-consent"
+                    className="text-sm text-muted-foreground"
+                  >
+                    I agree to receive marketing emails
+                  </Label>
                 </div>
               </form>
-            </div>
+            </Card>
           </div>
           <div className="flex flex-col justify-center space-y-6">
             <div className="space-y-2">
