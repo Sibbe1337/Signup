@@ -58,8 +58,8 @@ export async function validateMailchimpConfig() {
       const listId = process.env.MAILCHIMP_NEWSLETTER_LIST_ID;
       console.log("Attempting to fetch list with ID:", listId);
       
-      // Använd getLists istället för getList
-      const listsResponse = await client.lists.getLists();
+      // Använd getAllLists istället för getLists
+      const listsResponse = await client.lists.getAllLists();
       const audience = listsResponse.lists.find(list => list.id === listId);
       
       if (audience) {
