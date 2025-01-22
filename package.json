@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^5.9.3",
+    "@types/mailchimp__mailchimp_marketing": "^3.0.21",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
