@@ -9,11 +9,13 @@ import { Toaster } from "@/components/ui/toaster";
 const fontSans = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
+  display: 'swap',
 });
 
 const fontHeading = Rubik({
   variable: "--font-heading",
   subsets: ["latin"],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -28,7 +30,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn("min-h-screen bg-background font-sans antialiased")}>
+      <body className={cn(
+        "min-h-screen font-sans antialiased",
+        fontSans.variable,
+        fontHeading.variable
+      )}>
         {children}
         <Toaster />
       </body>
