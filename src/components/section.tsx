@@ -58,7 +58,7 @@ export function Section() {
       <div className="w-full max-w-4xl space-y-8 text-center">
         <div className="space-y-4">
           <h1 className="font-heading text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary md:text-6xl">
-            MoodTunes
+            MoodyTunes
           </h1>
           <p className="font-heading text-2xl">Your AI-Powered Music Discovery Platform</p>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
