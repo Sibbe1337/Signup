@@ -1,5 +1,17 @@
 import mailchimp from "@mailchimp/mailchimp_marketing";
 
+interface ListsSuccessResponse {
+  lists: Array<{
+    id: string;
+    name: string;
+  }>;
+}
+
+interface ErrorResponse {
+  status: number;
+  detail: string;
+}
+
 export function initMailchimp() {
   const apiKey = process.env.MAILCHIMP_API_KEY;
   const server = process.env.MAILCHIMP_SERVER_PREFIX;
@@ -9,18 +21,18 @@ export function initMailchimp() {
     throw new Error("Mailchimp configuration missing");
   }
 
-  // Verifiera att API-nyckeln har rätt format
+  // Verify API key format
   if (!apiKey.includes("-")) {
-    throw new Error("Mailchimp API-nyckel måste innehålla datacenter (t.ex. api-key-us21)");
+    throw new Error("Mailchimp API key must include datacenter (e.g. api-key-us21)");
   }
 
-  // Verifiera att datacenter matchar
+  // Verify datacenter matches
   const [, datacenter] = apiKey.split("-");
   if (datacenter !== server) {
     throw new Error(`Datacenter mismatch: ${datacenter} vs ${server}`);
   }
 
-  console.log("Konfigurerar Mailchimp med:", {
+  console.log("Configuring Mailchimp with:", {
     server,
     datacenter,
     apiKeyFormat: "valid",
@@ -58,8 +70,14 @@ export async function validateMailchimpConfig() {
       const listId = process.env.MAILCHIMP_NEWSLETTER_LIST_ID;
       console.log("Attempting to fetch list with ID:", listId);
       
-      // Använd getAllLists istället för getLists
-      const listsResponse = await client.lists.getAllLists();
+      const response = await client.lists.getAllLists();
+      const listsResponse = response as ListsSuccessResponse;
+      
+      if (!listsResponse.lists) {
+        console.error("Invalid response format from Mailchimp");
+        return false;
+      }
+
       const audience = listsResponse.lists.find(list => list.id === listId);
       
       if (audience) {
