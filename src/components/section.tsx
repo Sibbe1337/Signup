@@ -102,20 +102,20 @@ export function Section() {
   };
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-background to-secondary/10 px-4 py-16">
-      <div className="max-w-4xl w-full space-y-8 text-center">
+    <section className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-background to-secondary/10 px-4 py-16">
+      <div className="w-full max-w-4xl space-y-8 text-center">
         <div className="space-y-4">
-          <h1 className="font-heading text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+          <h1 className="font-heading text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary md:text-6xl">
             MoodTunes
           </h1>
-          <p className="text-2xl font-heading">Your AI-Powered Music Discovery Platform</p>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="font-heading text-2xl">Your AI-Powered Music Discovery Platform</p>
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
             Find the perfect soundtrack for your videos, games, and stories with our intelligent
             music recommendation engine.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-12">
-          <div className="relative aspect-square rounded-lg overflow-hidden">
+        <div className="grid grid-cols-1 gap-8 py-12 md:grid-cols-2">
+          <div className="relative aspect-square overflow-hidden rounded-lg">
             <Image
               src="/images/f8835ec5b1e556e6e955e03887da845c.gif"
               alt="MoodTunes Platform Preview"
@@ -125,7 +125,7 @@ export function Section() {
               placeholder="blur"
               className="object-cover"
             />
-            <div className="w-full max-w-md mx-auto p-6">
+            <div className="mx-auto w-full max-w-md p-6">
               <form onSubmit={handleNewsletterSubmit} className="space-y-4">
                 <div className="text-center">
                   <h2 className="text-2xl font-heading font-bold">Subscribe to our newsletter</h2>
@@ -148,9 +148,9 @@ export function Section() {
                       />
                       <Button type="submit" disabled={isNewsletterLoading}>
                         {isNewsletterLoading ? (
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          <Loader2 className="mr-2 size-4 animate-spin" />
                         ) : (
-                          <ArrowRight className="mr-2 h-4 w-4" />
+                          <ArrowRight className="mr-2 size-4" />
                         )}
                         Subscribe
                       </Button>
@@ -174,7 +174,7 @@ export function Section() {
               </form>
             </div>
           </div>
-          <div className="space-y-6 flex flex-col justify-center">
+          <div className="flex flex-col justify-center space-y-6">
             <div className="space-y-2">
               <Badge variant="secondary" className="mb-4">
                 Coming Soon
@@ -200,9 +200,9 @@ export function Section() {
                 </div>
                 <Button type="submit" className="w-full" disabled={isWaitlistLoading}>
                   {isWaitlistLoading ? (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className="mr-2 size-4 animate-spin" />
                   ) : (
-                    <Mail className="mr-2 h-4 w-4" />
+                    <Mail className="mr-2 size-4" />
                   )}
                   Sign up for Early Access
                 </Button>
@@ -210,19 +210,19 @@ export function Section() {
             </Card>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-primary" />
+                <CheckCircle className="text-primary size-4" />
                 <span className="text-muted-foreground">AI-Powered Search</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-primary" />
+                <CheckCircle className="text-primary size-4" />
                 <span className="text-muted-foreground">Smart Playlists</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-primary" />
+                <CheckCircle className="text-primary size-4" />
                 <span className="text-muted-foreground">Easy Licensing</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-primary" />
+                <CheckCircle className="text-primary size-4" />
                 <span className="text-muted-foreground">Creator Tools</span>
               </div>
             </div>
