@@ -117,7 +117,7 @@ export function Section() {
         <div className="grid grid-cols-1 gap-8 py-12 md:grid-cols-2">
           <div className="relative aspect-square overflow-hidden rounded-lg">
             <Image
-              src="https://placehold.co/800x800"
+              src="https://via.placeholder.com/800x800/4F46E5/FFFFFF?text=MoodTunes"
               alt="MoodTunes Platform Preview"
               width={800}
               height={800}
