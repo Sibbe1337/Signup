@@ -19,8 +19,8 @@ const fontHeading = Rubik({
 });
 
 export const metadata: Metadata = {
-  title: "MoodyTunes - AI-Powered Music Discovery",
-  description: "Find the perfect soundtrack for your videos, games, and stories with our intelligent music recommendation engine.",
+  title: "MoodyTunes",
+  description: "Your AI-Powered Music Discovery Platform",
 };
 
 export default function RootLayout({
